@@ -1,4 +1,9 @@
-**University web application**
+# University web application
+
+<img src="./media/gif1.gif" width="800" height="450" />
+<img src="./media/gif2.gif" width="800" height="450" />
+<img src="./media/gif3.gif" width="800" height="450" />
+<img src="./media/gif4.gif" width="800" height="450" />
 
 Our web application is an online grading system for students. The system serves as an online student index. There are three types of users: students, professors and system administrators.
 
