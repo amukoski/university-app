@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <script src="https://www.google.com/recaptcha/api.js" async="async" defer="defer"></script>
+    <title>Login Page</title>
+</head>
+
+<body>
+
+<p th:if="${#httpServletRequest.parameterMap.containsKey('error')}" style="color: red">Invalid username or password</p>
+<!--<p th:if="${#httpServletRequest.parameterMap.containsKey('recaptchaError')}" style="color: red">Invalid captcha response</p>-->
+<p th:if="${#httpServletRequest.parameterMap.containsKey('logout')}">You have been logged out</p>
+
+<p>
+    Вие поседувате валиден <span th:text="${certificate}"></span> сертификат.
+</p>
+
+<form th:action="@{/login}" method="post">
+    <div>
+        <label for="username">корисничко име:</label>
+        <input id="username" type="text" name="username" th:value="${username}" readonly="readonly" />
+    </div>
+    <br/>
+    <div>
+        <label for="password">лозинка:</label>
+        <input id="password" type="password" name="password"/>
+    </div>
+    <br/>
+    <!--<div th:if="${#httpServletRequest.getParameter('showRecaptcha')}" class="g-recaptcha" data-sitekey="6LdCXTYUAAAAAMX7tOoXi5yjdekjHwj-P5xSnyJc"></div>-->
+    <br/>
+    <div>
+        <input type="submit" value="Најави се"/>
+    </div>
+</form>
+</body>
+
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Administrator</title>
+
+    <link rel="stylesheet" href="../static/bootstrap.css" th:href="@{../bootstrap.css}" />
+    <link rel="stylesheet" href="../static/main.css" th:href="@{../main.css}" />
+    <link rel="stylesheet" href="../static/font-awesome.css" th:href="@{../font-awesome.css}" />
+    <link rel="stylesheet" href="../static/jquery-ui.css" th:href="@{../jquery-ui.css}" />
+
+    <script type="text/javascript" src="../static/jquery.js" th:src="@{../jquery.js}"></script>
+    <script type="text/javascript" src="../static/jquery-ui.js" th:src="@{../jquery-ui.js}"></script>
+    <script type="text/javascript" src="../static/bootstrap.js" th:src="@{../bootstrap.js}"></script>
+    <script type="text/javascript" src="../static/angular.min.js" th:src="@{../angular.min.js}"></script>
+    <script type="text/javascript" src="../static/app/app.module.js" th:src="@{../app/app.module.js}"></script>
+    <script type="text/javascript" src="../static/app/administrator.controller.js" th:src="@{../app/administrator.controller.js}"></script>
+
+    <script type="text/javascript" src="../static/main.js" th:src="@{../main.js}"></script>
+</head>
+<body ng-app="app" ng-controller="AdministratorController as vm" th:attr="ng-init='vm.init(\''+${username}+'\',true);'">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked admin-menu">
+                <li class="active"><a href="#" data-target-id="licnipodatoci"><i class="fa fa-id-card-o fa-fw"></i> Лични податоци</a></li>
+                <li><a href="#" data-target-id="semestri"><i class="fa fa-list-alt fa-fw"></i> Семестри</a></li>
+                <li><a href="#" data-target-id="predmeti"><i class="fa fa-file-text-o fa-fw"></i> Предмети</a></li>
+            </ul>
+        </div>
+
+        <!-- Licni Podatoci -->
+        <div class="col-md-9 well admin-content" id="licnipodatoci">
+            <form name="adminForm" class="form form-horizontal" ng-submit="vm.formSubmit()">
+                <fieldset>
+
+                    <legend>Лични податоци</legend>
+
+                    <div class="form-group" ng-class="{ 'has-error': adminForm.inputName.$invalid, 'has-feedback': adminForm.inputName.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputName">Име</label>
+                        <div class="col-md-4">
+                            <input id="inputName" name="inputName" type="text" placeholder="" class="form-control input-md" ng-model="vm.admin.firstName" required="required" />
+                            <span ng-show="adminForm.inputName.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error': adminForm.inputSurname.$invalid, 'has-feedback': adminForm.inputSurname.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputSurname">Презиме</label>
+                        <div class="col-md-4">
+                            <input id="inputSurname" name="inputSurname" type="text" placeholder="" class="form-control input-md" ng-model="vm.admin.lastName" required="required" />
+                            <span ng-show="adminForm.inputSurname.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error': adminForm.inputEmail.$invalid, 'has-feedback': adminForm.inputEmail.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputEmail">Е-пошта</label>
+                        <div class="col-md-4">
+                            <input id="inputEmail" name="inputEmail" type="email" placeholder="" class="form-control input-md" ng-model="vm.admin.email" required="required" />
+                            <span ng-show="adminForm.inputEmail.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error': adminForm.inputPhone.$invalid, 'has-feedback': adminForm.inputPhone.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputPhone">Мобилен телефон</label>
+                        <div class="col-md-4">
+                            <input id="inputPhone" name="inputPhone" type="text" placeholder="" class="form-control input-md" ng-model="vm.admin.mobilePhone" required="required" />
+                            <span ng-show="adminForm.inputPhone.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="btnSubmit"></label>
+                        <div class="col-md-4">
+                            <button id="btnSubmit" name="btnSubmit" class="btn btn-primary pull-right" type="submit" ng-disabled="adminForm.$invalid">Зачувај</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+        <!-- Licni Podatoci -->
+
+        <!-- Predmeti -->
+        <div class="col-md-9 well admin-content" id="predmeti">
+
+            <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModalPredmet">
+                <span class="glyphicon glyphicon-plus"></span> Додади нов предмет
+            </button>
+
+            <br/> <br/>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr class="info">
+                        <td>#</td>
+                        <th>Код</th>
+                        <th>Часови</th>
+                        <th>Предмет</th>
+                        <th>Семестар</th>
+                        <th>Додели на професор</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="course in vm.courses track by $index" >
+                        <td>{{vm.courses.length - $index}}</td>
+                        <td>{{course.code}}</td>
+                        <td>{{course.numberOfClasses}}</td>
+                        <td>{{course.name}}</td>
+                        <td>{{course.semesterNumber}}</td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalProfessor" ng-click="vm.modalProfessorOpen(course)">
+                                <span class="glyphicon glyphicon-plus"></span> Професор
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <!-- Predmeti -->
+
+        <!-- Semestri -->
+        <div class="col-md-9 well admin-content" id="semestri">
+
+            <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModalSemester">
+                <span class="glyphicon glyphicon-plus"></span> Додади нов семестар
+            </button>
+
+            <br/> <br/>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr class="info">
+                        <td>#</td>
+                        <th>Семестар</th>
+                        <th>Академска година</th>
+                        <th>Запиши студент</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="semester in vm.semesters track by $index" >
+                        <td>{{vm.semesters.length - $index}}</td>
+                        <td>{{(semester.summer) ? ('Летен') : ('Зимски')}}</td>
+                        <td>{{semester.academicYear}}</td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModalStudent" ng-click="vm.modalStudentOpen(semester)" >
+                                <span class="glyphicon glyphicon-plus"></span> Студент
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <!-- Semestri -->
+
+    </div>
+
+    <div id="myModalPredmet" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-md">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Додади нов предмет</h4>
+                </div>
+
+                <form name="modalPredmetAdmin" ng-submit="vm.modalPredmetSubmit()" >
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="control-label" for="predmetCode">Код</label>
+                            <input type="text" class="form-control" id="predmetCode" name="predmetCode" ng-model="vm.course.code" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="predmetCasovi">Часови</label>
+                            <input type="text" class="form-control" id="predmetCasovi" name="predmetCasovi" ng-model="vm.course.numberOfClasses" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="predmetIme">Предмет</label>
+                            <input type="text" class="form-control" id="predmetIme" name="predmetIme" ng-model="vm.course.name" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="predmetSemestar">Број на Семестар</label>
+                            <input type="number" class="form-control" id="predmetSemestar" name="predmetSemestar" ng-model="vm.course.semesterNumber" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="predmetEktc">Кредити (EKTC)</label>
+                            <input type="number" step="0.1" class="form-control" id="predmetEktc" name="predmetEktc" ng-model="vm.course.ektc" required="required" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="predmetStatus">Статус</label>
+                            <div id="predmetStatus">
+                                <label class="radio-inline" for="status-0">
+                                    <input type="radio" name="status" id="status-0" value="З" ng-model="vm.course.status" required="required"/>
+                                    Задолжителен
+                                </label>
+                                <label class="radio-inline" for="status-1">
+                                    <input type="radio" name="status" id="status-1" value="И" ng-model="vm.course.status" required="required"/>
+                                    Изборен
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default" data-dismiss="modal" ng-click="vm.modalPredmetReset()">Откажи</button>
+                        <button type="submit" class="btn btn-success" ng-disabled="modalPredmetAdmin.$invalid">Внеси</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="myModalSemester" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-md">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Додади нов семестар</h4>
+                </div>
+
+                <form name="modalSemesterAdmin" ng-submit="vm.modalSemesterSubmit()" >
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="control-label" for="semesterSummer">Семестар</label>
+                            <div id="semesterSummer">
+                                <label class="radio-inline" for="statusS-0">
+                                    <input type="radio" name="status" id="statusS-0" value="false" ng-model="vm.semester.summer" required="required"/>
+                                    Зимски
+                                </label>
+                                <label class="radio-inline" for="statusS-1">
+                                    <input type="radio" name="status" id="statusS-1" value="true" ng-model="vm.semester.summer" required="required"/>
+                                    Летен
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="semesterYear">Академска година</label>
+                            <input type="text" class="form-control" id="semesterYear" name="semesterYear" pattern="20\d{2}/20\d{2}" placeholder="eg. 2017/2018" ng-model="vm.semester.academicYear" required="required" />
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default" data-dismiss="modal" ng-click="vm.modalSemesterReset()">Откажи</button>
+                        <button type="submit" class="btn btn-success" ng-disabled="modalSemesterAdmin.$invalid">Внеси</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="myModalProfessor" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-md">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Додели предмет на професор</h4>
+                </div>
+
+                <form name="modalProfessorAdmin" ng-submit="vm.modalProfessorSubmit()" >
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="control-label" for="izberiProf">Професор</label>
+                            <select id="izberiProf" name="izberiProf" class="form-control" ng-model="vm.teach.professor" required="required">
+                                <option value="">избери професор</option>
+                                <option ng-repeat="professor in vm.professors" value="{{professor.username}}">{{ professor.name }}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="izberiSem">Семестар</label>
+                            <select id="izberiSem" name="izberiSem" class="form-control" ng-model="vm.teach.semester" required="required">
+                                <option value="">избери семестар</option>
+                                <option ng-repeat="semester in vm.professorSemesters" value="{{semester.id}}">
+                                    {{(semester.summer) ? ('Летен (' + semester.academicYear + ')') : ('Зимски (' + semester.academicYear + ')') }}
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default" data-dismiss="modal" ng-click="vm.modalProfessorReset()">Откажи</button>
+                        <button type="submit" class="btn btn-success" ng-disabled="modalProfessorAdmin.$invalid">Внеси</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="myModalStudent" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Запиши семестар</h4>
+                </div>
+
+                <form name="modalStudentAdmin" ng-submit="vm.modalStudentSubmit()" >
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="control-label" for="izberiStud">Студент</label>
+                            <select id="izberiStud" name="izberiStud" class="form-control" ng-model="vm.enroll.student" required="required">
+                                <option value="">избери студент</option>
+                                <option ng-repeat="student in vm.students" value="{{student.username}}">{{student.indexNumber + '\t' + student.firstName + ' ' + student.lastName}}</option>
+                            </select>
+                        </div>
+
+                        <br/>
+
+                        <div class="form-group">
+                            <label class="control-label" for="tablePredmet">Предмети</label>
+                            <table class="table table-striped" id="tablePredmet">
+                                <thead>
+                                    <tr class="info">
+                                        <th>Код</th>
+                                        <th>Часови</th>
+                                        <th>Предмет</th>
+                                        <th>Кредити</th>
+                                        <th>Семестар</th>
+                                        <th>Професор</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr ng-repeat="course in vm.enroll.courses track by $index" >
+                                        <td>{{course.code}}</td>
+                                        <td>{{course.numberOfClasses}}</td>
+                                        <td>{{course.name}}</td>
+                                        <td>{{course.ektc | number : 2}}</td>
+                                        <td>{{course.semesterNumber}}</td>
+                                        <td>{{course.professor}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm" ng-click="vm.removeCourse($index)">
+                                                <span class="glyphicon glyphicon-minus"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <hr/>
+
+                        <div class="form-group">
+                            <label class="control-label" for="tablePredmetIzberi">Додади предмет</label>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="tablePredmetIzberi">
+                                    <thead>
+                                        <tr class="info">
+                                            <th>Код</th>
+                                            <th>Часови</th>
+                                            <th>Предмет</th>
+                                            <th>Кредити</th>
+                                            <th>Семестар</th>
+                                            <th>Професор</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr ng-repeat="course in vm.studentCourses track by $index" ng-click="vm.addCourse($index)" >
+                                            <td>{{course.code}}</td>
+                                            <td>{{course.numberOfClasses}}</td>
+                                            <td>{{course.name}}</td>
+                                            <td>{{course.ektc | number : 2}}</td>
+                                            <td>{{course.semesterNumber}}</td>
+                                            <td>{{course.professor}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-sm">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default" data-dismiss="modal" ng-click="vm.modalStudentReset()">Откажи</button>
+                        <button type="submit" class="btn btn-success" ng-disabled="modalStudentAdmin.$invalid">Запиши</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

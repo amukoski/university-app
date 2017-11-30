@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>University Application</title>
+
+    <link rel="stylesheet" href="../static/bootstrap.css" th:href="@{/bootstrap.css}" />
+    <link rel="stylesheet" href="../static/main.css" th:href="@{/main.css}" />
+    <link rel="stylesheet" href="../static/font-awesome.css" th:href="@{/font-awesome.css}" />
+    <link rel="stylesheet" href="../static/jquery-ui.css" th:href="@{/jquery-ui.css}" />
+
+    <script type="text/javascript" src="../static/jquery.js" th:src="@{/jquery.js}"></script>
+    <script type="text/javascript" src="../static/jquery-ui.js" th:src="@{/jquery-ui.js}"></script>
+    <script type="text/javascript" src="../static/bootstrap.js" th:src="@{/bootstrap.js}"></script>
+    <script type="text/javascript" src="../static/angular.min.js" th:src="@{/angular.min.js}"></script>
+    <script type="text/javascript" src="../static/app/app.module.js" th:src="@{/app/app.module.js}"></script>
+    <script type="text/javascript" src="../static/app/university.controller.js" th:src="@{/app/university.controller.js}"></script>
+
+    <script type="text/javascript" src="../static/main.js" th:src="@{/main.js}"></script>
+</head>
+<body ng-app="app" ng-controller="UniversityController as vm">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-login">
+                    <div class="panel-heading">
+                        <h3>Потребно е да го доставите соодветниот сертификат за да продолжите во системот</h3>
+                    </div>
+
+                    <div class="panel-body form-horizontal">
+                        <div class="form-group">
+                            <div class="col-md-3 col-md-offset-2 text-right">
+                                <label class="control-label" for="selectRole">Сертификат</label>
+                            </div>
+                            <div class="col-md-5">
+                                <select id="selectRole" name="selectRole" class="form-control" ng-model="vm.cert" >
+                                    <option value="/student"> Студент </option>
+                                    <option value="/professor"> Професор </option>
+                                    <option value="/administrator"> Администратор </option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <a href="{{vm.cert}}">
+                                <button type="button" class="btn btn-info btn-lg col-md-6 col-md-offset-3"> продолжете </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

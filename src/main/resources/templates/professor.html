@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Professor</title>
+
+    <link rel="stylesheet" href="../static/bootstrap.css" th:href="@{../bootstrap.css}" />
+    <link rel="stylesheet" href="../static/main.css" th:href="@{../main.css}" />
+    <link rel="stylesheet" href="../static/font-awesome.css" th:href="@{../font-awesome.css}" />
+    <link rel="stylesheet" href="../static/jquery-ui.css" th:href="@{../jquery-ui.css}" />
+
+    <script type="text/javascript" src="../static/jquery.js" th:src="@{../jquery.js}"></script>
+    <script type="text/javascript" src="../static/jquery-ui.js" th:src="@{../jquery-ui.js}"></script>
+    <script type="text/javascript" src="../static/bootstrap.js" th:src="@{../bootstrap.js}"></script>
+    <script type="text/javascript" src="../static/angular.min.js" th:src="@{../angular.min.js}"></script>
+    <script type="text/javascript" src="../static/app/app.module.js" th:src="@{../app/app.module.js}"></script>
+    <script type="text/javascript" src="../static/app/professor.controller.js" th:src="@{../app/professor.controller.js}"></script>
+
+    <script type="text/javascript" src="../static/main.js" th:src="@{../main.js}"></script>
+</head>
+<body ng-app="app" ng-controller="ProfessorController as vm" th:attr="ng-init='vm.init(\''+${username}+'\',true);'">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked admin-menu">
+                <li class="active"><a href="#" data-target-id="licnipodatoci"><i class="fa fa-id-card-o fa-fw"></i> Лични податоци</a></li>
+                <li><a href="#" data-target-id="predmeti"><i class="fa fa-file-text-o fa-fw"></i> Предмети</a></li>
+            </ul>
+        </div>
+
+        <!-- Licni Podatoci -->
+        <div class="col-md-9 well admin-content" id="licnipodatoci">
+            <form name="professorForm" class="form form-horizontal" ng-submit="vm.formSubmit()">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <legend>Лични податоци</legend>
+
+                    <div class="form-group" ng-class="{ 'has-error': professorForm.inputName.$invalid, 'has-feedback': professorForm.inputName.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputName">Име</label>
+                        <div class="col-md-4">
+                            <input id="inputName" name="inputName" type="text" placeholder="" class="form-control input-md" ng-model="vm.professor.firstName" required="required" />
+                            <span ng-show="professorForm.inputName.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error': professorForm.inputSurname.$invalid, 'has-feedback': professorForm.inputSurname.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputSurname">Презиме</label>
+                        <div class="col-md-4">
+                            <input id="inputSurname" name="inputSurname" type="text" placeholder="" class="form-control input-md" ng-model="vm.professor.lastName" required="required" />
+                            <span ng-show="professorForm.inputSurname.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error': professorForm.inputEMBG.$invalid, 'has-feedback': professorForm.inputEMBG.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputEMBG">Матичен број</label>
+                        <div class="col-md-4">
+                            <input id="inputEMBG" name="inputEMBG" type="text" placeholder="" class="form-control input-md" ng-model="vm.professor.embg" required="required" />
+                            <span ng-show="professorForm.inputEMBG.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error': professorForm.inputEmail.$invalid, 'has-feedback': professorForm.inputEmail.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputEmail">Е-пошта</label>
+                        <div class="col-md-4">
+                            <input id="inputEmail" name="inputEmail" type="email" placeholder="" class="form-control input-md" ng-model="vm.professor.email" required="required" />
+                            <span ng-show="professorForm.inputEmail.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="radiosGender">Пол</label>
+                        <div class="col-md-4" id="radiosGender">
+                            <label class="radio-inline" for="radios-0">
+                                <input type="radio" name="radios" id="radios-0" value="M" ng-model="vm.professor.gender"/>
+                                Машки
+                            </label>
+                            <label class="radio-inline" for="radios-1">
+                                <input type="radio" name="radios" id="radios-1" value="F" ng-model="vm.professor.gender"/>
+                                Женски
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error': professorForm.inputCity.$invalid, 'has-feedback': professorForm.inputCity.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputCity">Град</label>
+                        <div class="col-md-4">
+                            <input id="inputCity" name="inputCity" type="text" placeholder="" class="form-control input-md" ng-model="vm.professor.city" required="required" />
+                            <span ng-show="professorForm.inputCity.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error': professorForm.inputCountry.$invalid, 'has-feedback': professor.inputCountry.$invalid }" >
+                        <label class="col-md-4 control-label" for="inputCountry">Држава</label>
+                        <div class="col-md-4">
+                            <input id="inputCountry" name="inputCountry" type="text" placeholder="" class="form-control input-md" ng-model="vm.professor.country" required="required" />
+                            <span ng-show="professorForm.inputCountry.$invalid" class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="inputAddress">Адреса</label>
+                        <div class="col-md-4">
+                            <textarea class="form-control" id="inputAddress" name="textarea" ng-model="vm.professor.address"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="inputPhone">Мобилен телефон</label>
+                        <div class="col-md-4">
+                            <input id="inputPhone" name="inputPhone" type="text" placeholder="" class="form-control input-md" ng-model="vm.professor.mobilePhone"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="inputSpecialization">Специјализација</label>
+                        <div class="col-md-4">
+                            <input id="inputSpecialization" name="inputSpecialization" type="text" placeholder="" class="form-control input-md" ng-model="vm.professor.specialization" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="btnSubmit"></label>
+                        <div class="col-md-4">
+                            <button id="btnSubmit" name="btnSubmit" class="btn btn-primary pull-right" type="submit" ng-disabled="professorForm.$invalid">Зачувај</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+        <!-- Licni Podatoci -->
+
+        <!-- Predmeti -->
+        <div class="col-md-9 well admin-content" id="predmeti">
+
+            <h4 class="text-warning" ng-hide="vm.courses.length > 0"> Нема податоци </h4>
+            <table class="table table-striped" ng-show="vm.courses.length > 0">
+                <thead>
+                <tr class="info">
+                    <th>#</th>
+                    <th>Код</th>
+                    <th>Предмет</th>
+                    <th>Семестар</th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="course in vm.courses track by $index" >
+                        <td>{{vm.courses.length - $index}}</td>
+                        <td>{{course.course.code}}</td>
+                        <td>{{course.course.name}}</td>
+                        <td>{{(course.semester.summer) ? ('Летен (' + course.semester.academicYear + ')') : ('Зимски (' + course.semester.academicYear + ')') }}</td>
+                        <td>
+                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal" ng-click="vm.modal($index)">
+                                <span class="glyphicon glyphicon-plus"></span> Внеси оценка
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <!-- Predmeti -->
+    </div>
+
+    <div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-md">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Внеси оценка за студент</h4>
+                </div>
+
+                <form name="professorOcena" ng-submit="vm.modalSubmit()" >
+                    <div class="modal-body">
+
+                            <div class="form-group">
+                                <label class="control-label" for="izberiStudent">Студент:</label>
+                                <select id="izberiStudent" name="izberiStudent" class="form-control" ng-model="vm.selectedEnroll" required="required">
+                                    <option value="">избери студент</option>
+                                    <option ng-repeat="student in vm.students" value="{{student.enrollID}}">{{student.indexNumber + '\t' + student.firstName + ' ' + student.lastName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label" for="izberiSesija">Сесија:</label>
+                                <select id="izberiSesija" name="izberiSesija" class="form-control" ng-model="vm.selectedSession" required="required">
+                                    <option value="">избери сесија</option>
+                                    <option ng-repeat="session in vm.sessions" value="{{session}}">{{session}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label" for="izberiOcenka">Оценка</label>
+                                <select id="izberiOcenka" name="izberiOcenka" class="form-control" ng-model="vm.selectedGrade" required="required">
+                                    <option value="">избери оценка</option>
+                                    <option ng-repeat="grade in vm.grades" value="{{grade}}">{{grade}}</option>
+                                </select>
+                            </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default" data-dismiss="modal" ng-click="vm.modalReset()">Откажи</button>
+                        <button type="submit" class="btn btn-success" ng-disabled="professorOcena.$invalid">Внеси</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
