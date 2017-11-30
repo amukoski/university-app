@@ -1,4 +1,4 @@
-# University web application
+# University web application (needs refactoring)
 
 <img src="./media/gif1.gif" width="800" height="450" />
 <img src="./media/gif2.gif" width="800" height="450" />
