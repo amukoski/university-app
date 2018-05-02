@@ -8,7 +8,7 @@
 Our web application is an online grading system for students. The system serves as an online student index. There are three types of users: students, professors and system administrators.
 
 Students have an overview of all grades that have been received by a particular subject, and also have an overview of all the semesters they enrolled from the period when they are students till now.
-
+aa
 Professors use the system as an overview of all subject they have teached at a certain semester in all years after they teach at faculty. Professors have the opportunity to input a grade on their subject, to those students who have passed the course.
 
 Administrators are in charge of creating new subjects, assignment certain subjects to professors, and creating new semesters for students.
